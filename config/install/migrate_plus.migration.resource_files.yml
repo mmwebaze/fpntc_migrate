@@ -1,0 +1,58 @@
+# Migration file for creating "file" for resources.
+
+id: resource_files
+label: Files associated to resource content.
+migration_group: fpntc
+# Source.
+source:
+  plugin: csv
+  path: 'public://csv/FPNTC_Resources_testing.csv'
+  header_row_count: 1
+  keys:
+    - resource_file
+  # Source field definitions.
+  fields:
+    #-
+     # id: id of the resource file associated with the resource.
+    resource_file: name of resource file
+  constants:
+    file_source_uri: 'public://resource'
+    file_dest_uri: 'public://resource/file'
+# Destination.
+destination:
+  # We will be creating entities of type "file" this time.
+  plugin: 'entity:file'
+# Mappings.
+process:
+  uid:
+    plugin: default_value
+    default_value: 1
+  filename: resource_file
+  file_source:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/file_source_uri
+        - resource_file
+    -
+      plugin: urlencode
+  file_dest:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/file_dest_uri
+        - resource_file
+    -
+      plugin: urlencode
+  uri:
+    plugin: file_copy
+    source:
+      - '@file_source'
+      - '@file_dest'
+# Dependencies.
+dependencies:
+  enforced:
+    module:
+      - fpntc_migrate

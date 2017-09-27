@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Contains fpntc_migrate.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function fpntc_migrate_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the fpntc_migrate module.
+    case 'help.page.fpntc_migrate':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Migrates d7 nodes to d8 using migrate plus') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fpntc_migrate_theme() {
+  return [
+    'fpntc_migrate' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
