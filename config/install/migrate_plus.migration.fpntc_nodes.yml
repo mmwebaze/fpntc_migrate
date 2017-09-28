@@ -61,10 +61,10 @@ process:
     source: ce_credits_offered
   field_time_required/value: time_required
   #Resource (File)
-  field_resource_file/target_id:
-    plugin: migration
-    migration: resource_files
-    source: resource_file
+ # field_resource_file/target_id:
+  #  plugin: migration
+   # migration: resource_files
+    #source: resource_file
   #field_resource_file_display: resource_file
   #field_resource_file_description: resource_file
   #supplemental materials file
@@ -90,9 +90,9 @@ process:
   #'body/summary': body_summary
   #'body/format': body_format
   #type: resource type
-migration_dependencies:
-  required:
-    - resource_files
+#migration_dependencies:
+  #required:
+    #- resource_files
 dependencies:
   enforced:
     module:

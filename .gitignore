@@ -1,0 +1,3 @@
+# Created by .ignore support plugin (hsz.mobi)
+config/install/migrate_plus.migration.fpntc_nodes_*
+src/Plugin/migrate/process/Iterator.php

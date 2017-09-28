@@ -1,0 +1,12 @@
+resource.settings:
+  delimiter: '-'
+  path: 'public://csv/FPNTC_Resources_testing.csv'
+  id: 1
+  #number of columns that will be concatinated
+  destinations:
+    field_intended_audience:
+      - intended_audience
+      - intended_audience_1
+    resource_type: {}
+    topics: {}
+    purpose: {}

@@ -5,7 +5,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Node body field creation plugin
+ * Processes taxonomy id by label
  *
  * @MigrateProcessPlugin(
  *   id = "taxonomy_term_tid"
@@ -14,6 +14,17 @@ use Drupal\migrate\Row;
  */
 class ResourceTaxonomy extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
+    /*$tids = [];
+    foreach (explode('-',$value) as $name){
+      $term = \Drupal::entityTypeManager()
+        ->getStorage('taxonomy_term')
+        ->loadByProperties(['name' => $name]);
+
+      array_push($tids, current($term)->id());
+    }
+
+    return $tids;*/
+
       $term = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties(['name' => $value]);
