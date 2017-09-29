@@ -42,7 +42,7 @@ source:
 destination:
   plugin: entity:node
 process:
-  nid: id
+  #nid: id
   type:
     plugin: default_value
     default_value: resource

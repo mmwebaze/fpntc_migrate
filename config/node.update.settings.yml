@@ -5,8 +5,8 @@ resource.settings:
   #number of columns that will be concatinated
   destinations:
     field_intended_audience:
-      - intended_audience
+      #- intended_audience
       - intended_audience_1
-    resource_type: {}
-    topics: {}
-    purpose: {}
+    field_resource_type: {}
+    field_topics: {}
+    ield_purpose: {}

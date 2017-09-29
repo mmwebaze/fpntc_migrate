@@ -2,9 +2,12 @@
 use Symfony\Component\Yaml\Yaml;
 use Drupal\fpntc_migrate\Util\CsvHandler;
 
+/**
+ * Implements hook_drush_command().
+ */
 function fpntc_migrate_drush_command(){
   $items['fpntc-migrate'] = [
-    'description' => 'fpntc migrate',
+    'description' => 'fpntc update nodes migrate',
     'aliases' => ['fp'],
   ];
 
@@ -22,36 +25,56 @@ function drush_fpntc_migrate(){
 
   $content = CsvHandler::readCsv($path);
 
-  foreach ($destinations as $nodeField => $destination){
-    if(count($destination) > 0){
+  foreach ($destinations as $destination => $fields){
+    if(count($fields) > 0){
       $columns = [];
-      foreach ($destination as $item) {
-        array_push($columns, $content['header'][$item]);
+      foreach ($fields as $field) {
+        array_push($columns, $content['header'][$field]);
       }
       foreach ($content['body'] as $line){
         $tids = [];
         foreach ($columns as $column){
+          var_dump(empty($line[$column]).' '.$line[$column]);
+          if (!empty($line[$column])){
+            $term = \Drupal::entityTypeManager()
+              ->getStorage('taxonomy_term')
+              ->loadByProperties(['name' => $line[$column]]);
+            array_push($tids, current($term)->id());
+          }
           //array_push($str, $line[$column]);
-          $term = \Drupal::entityTypeManager()
-            ->getStorage('taxonomy_term')
-            ->loadByProperties(['name' => $line[$column]]);
-          array_push($tids, current($term)->id());
+
         }
         foreach ($tids as $tid){
-          var_dump($line[1].'&&');die();
           $storage = \Drupal::service('entity_type.manager')->getStorage('node');
           $ids = $storage->getQuery()
             ->condition('title', $line[1])
             ->execute();
           $nodes = $storage->loadMultiple($ids);
-          var_dump(count($nodes)); die();
+
+          if(count($nodes) == 1){
+            $node = current($nodes);
+            $options = $node->get($destination)->getValue();
+            foreach ($options as $option){
+              var_dump(array_values($option));
+            }
+            var_dump($options);
+            var_dump('---------------------');
+            array_push($options, ['target_id' => $tid]);
+            var_dump($options);
+            var_dump('@@@@---------------------');
+            var_dump($options);
+            var_dump('---------------------');
+            $node->set($destination, $options);
+            $node->save();
+            var_dump($node->get($destination)->getValue());
+          }
         }
 
       }
     }
   }
 
-  $storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  /*$storage = \Drupal::service('entity_type.manager')->getStorage('node');
   $ids = $storage->getQuery()
     ->condition('type', 'resource')
     ->execute();
@@ -61,9 +84,9 @@ function drush_fpntc_migrate(){
     var_dump($node->label());die();
   }
 
-  var_dump(count($nodes));
+  var_dump(count($nodes));*/
 
-  /*$nids = \Drupal::entityQuery('node')->condition('type','resource')->execute();
+ /* $nids = \Drupal::entityQuery('node')->condition('type','resource')->execute();
   $nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
 
   foreach ($nodes as $node) {
