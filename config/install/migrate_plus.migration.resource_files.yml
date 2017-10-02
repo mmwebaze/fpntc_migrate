@@ -16,8 +16,8 @@ source:
      # id: id of the resource file associated with the resource.
     resource_file: name of resource file
   constants:
-    file_source_uri: 'public://resource'
-    file_dest_uri: 'public://resource/file'
+    file_source_uri: 'public://FPNTC_Resource_Files'
+    file_dest_uri: 'public://fpntc_resources/'
 # Destination.
 destination:
   # We will be creating entities of type "file" this time.

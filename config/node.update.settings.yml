@@ -1,12 +1,22 @@
 resource.settings:
   delimiter: '-'
+  file_source_uri: 'public://FPNTC_Resource_Files'
+  file_dest_uri: 'public://fpntc_resources'
   path: 'public://csv/FPNTC_Resources_reformatted.csv'
   id: 1
   #number of columns that will be concatinated
-  destinations:
-    field_intended_audience:
-      - intended_audience
-    field_resource_type: {}
-    field_topics:
-      - topics
-    field_purpose: {}
+  entity:
+    term:
+      destinations:
+        field_intended_audience:
+          - intended_audience
+        field_resource_type: {}
+        field_topics:
+          - topics
+        field_purpose: {}
+    file:
+      destinations:
+        field_resource_file:
+          - resource_file
+        field_supplemental_materials:
+          - supplemental_file
