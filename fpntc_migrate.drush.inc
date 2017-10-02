@@ -15,7 +15,7 @@ function fpntc_migrate_drush_command(){
 }
 
 function drush_fpntc_migrate(){
-  $module_path = drupal_get_path('module', 'fpntc_migrate');
+  /*$module_path = drupal_get_path('module', 'fpntc_migrate');
   $content_settings = file_get_contents($module_path.'/config/node.update.settings.yml');
   $loaded_settings = Yaml::parse($content_settings)['resource.settings'];
 
@@ -72,8 +72,16 @@ function drush_fpntc_migrate(){
 
       }
     }
-  }
+  }*/
+//Increase knowledge
+  $term = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties(['name' => 'Increase knowledgeD']);
 
+  var_dump(count($term).' bbbb');
+  $time = '';
+  var_dump(strtotime($time));
+  var_dump(time());
   /*$storage = \Drupal::service('entity_type.manager')->getStorage('node');
   $ids = $storage->getQuery()
     ->condition('type', 'resource')

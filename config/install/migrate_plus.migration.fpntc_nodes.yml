@@ -4,7 +4,7 @@ label: FPNTC node types from FPNTC D7 site
 migration_group: fpntc
 source:
   plugin: csv
-  path: 'public://csv/FPNTC_Resources_testing.csv'
+  path: 'public://csv/FPNTC_Resources_reformatted.csv'
   delimiter: ','
   enclosure: '"'
   header_row_count: 1
@@ -52,14 +52,19 @@ process:
     default_value: 1
   title: title
   created:
-    plugin: callback
-    source: date_added
-    callable: strtotime
+    -
+      plugin: skip_on_empty
+      method: process
+      source: date_added
+    -
+      plugin: callback
+      #source: date_added
+      callable: strtotime
 
   'field_ce_credits_offered/value':
     plugin: ce_credits_offered_plugin
     source: ce_credits_offered
-  field_time_required/value: time_required
+  'field_time_required/value': time_required
   #Resource (File)
  # field_resource_file/target_id:
   #  plugin: migration
@@ -71,19 +76,19 @@ process:
   ##field_supplemental_materials_target_id: supplemental_file
   #field_supplemental_materials_display: supplemental_file
   #field_supplemental_materials_description: supplemental_file
-  field_resource_link: resource_link
-  field_resource_type/target_id:
-    plugin: taxonomy_term_tid
-    source: resource_type
-  field_topics/target_id:
-    plugin: taxonomy_term_tid
-    source: topics
-  field_purpose/target_id:
-    plugin: taxonomy_term_tid
-    source: purpose
-  'field_intended_audience/target_id':
-    plugin: taxonomy_term_tid
-    source: intended_audience
+  #field_resource_link: resource_link
+  #'field_resource_type/target_id':
+   # plugin: taxonomy_term_tid
+    #source: resource_type
+  #'field_topics/target_id':
+   # plugin: taxonomy_term_tid
+    #source: topics
+  #'field_purpose/target_id':
+   # plugin: taxonomy_term_tid
+    #source: purpose
+  #'field_intended_audience/target_id':
+   # plugin: taxonomy_term_tid
+  #  source: intended_audience
 
   #evaluation_link: evaluation_link
   #'body/value': body_value

@@ -14,20 +14,15 @@ use Drupal\migrate\Row;
  */
 class ResourceTaxonomy extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
-    /*$tids = [];
-    foreach (explode('-',$value) as $name){
-      $term = \Drupal::entityTypeManager()
-        ->getStorage('taxonomy_term')
-        ->loadByProperties(['name' => $name]);
-
-      array_push($tids, current($term)->id());
-    }
-
-    return $tids;*/
+    var_dump($value);
 
       $term = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties(['name' => $value]);
+
+    if (count($term) == 1){
+      return current($term)->id();
+    }
     return current($term)->id();
   }
 }
