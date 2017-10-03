@@ -1,5 +1,5 @@
 resource.settings:
-  delimiter: '-'
+  delimiter: '|'
   file_source_uri: 'public://FPNTC_Resource_Files'
   file_dest_uri: 'public://fpntc_resources'
   path: 'public://csv/FPNTC_Resources_reformatted.csv'
