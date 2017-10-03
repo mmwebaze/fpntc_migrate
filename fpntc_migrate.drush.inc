@@ -77,7 +77,7 @@ function drush_fpntc_migrate($entity){
                   $nodes = get_nodes($line[$id]);
                   if(count($nodes) == 1){
                     $node = current($nodes);
-                    update_nodes($node, $destination, $file->id());
+                    update_nodes($node, $destination, $file->id(), $bestanden[1]);
                   }
                 }
               }
@@ -122,13 +122,16 @@ function get_nodes($line){
   return $nodes;
 }
 
-function update_nodes($node, $destination, $id){
+function update_nodes($node, $destination, $id, $description = ''){
   $options = $node->get($destination)->getValue();
   /*foreach ($options as $option){
     var_dump(array_values($option));
   }
   var_dump($options);*/
+
   array_push($options, ['target_id' => $id]);
+
+
 
   $node->set($destination, $options);
   $node->save();

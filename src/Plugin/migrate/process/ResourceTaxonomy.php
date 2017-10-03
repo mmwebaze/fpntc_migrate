@@ -14,8 +14,6 @@ use Drupal\migrate\Row;
  */
 class ResourceTaxonomy extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
-    var_dump($value);
-
       $term = \Drupal::entityTypeManager()
         ->getStorage('taxonomy_term')
         ->loadByProperties(['name' => $value]);
@@ -23,6 +21,7 @@ class ResourceTaxonomy extends ProcessPluginBase {
     if (count($term) == 1){
       return current($term)->id();
     }
-    return current($term)->id();
+    var_dump('Term does not exist '.$value);
+    return 0;
   }
 }

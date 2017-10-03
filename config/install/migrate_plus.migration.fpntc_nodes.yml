@@ -51,6 +51,9 @@ process:
     plugin: default_value
     default_value: 1
   title: title
+  'field_resource_type/target_id':
+     plugin: taxonomy_term_tid
+     source: resource_type
   created:
     -
       plugin: skip_on_empty
@@ -61,6 +64,7 @@ process:
       #source: date_added
       callable: strtotime
 
+  'field_resource_link/uri': resource_link
   'field_ce_credits_offered/value':
     plugin: ce_credits_offered_plugin
     source: ce_credits_offered
@@ -76,7 +80,6 @@ process:
   ##field_supplemental_materials_target_id: supplemental_file
   #field_supplemental_materials_display: supplemental_file
   #field_supplemental_materials_description: supplemental_file
-  #field_resource_link: resource_link
   #'field_resource_type/target_id':
    # plugin: taxonomy_term_tid
     #source: resource_type
