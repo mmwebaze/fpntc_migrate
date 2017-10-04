@@ -16,6 +16,17 @@ function fpntc_migrate_drush_command(){
 }
 
 function drush_fpntc_migrate($entity){
+  /*$storage = \Drupal::service('entity_type.manager')->getStorage('node');
+  $ids = $storage->getQuery()
+    ->condition('type', 'resource')
+    ->execute();
+  $nodes = $storage->loadMultiple($ids);
+  foreach ($nodes as $node){
+    var_dump('Deleting node with id '.$node->id());
+    $node->delete();
+  }
+
+  die();*/
   $correct_args = array('term', 'file');
   if (!in_array($entity, $correct_args)) {
     return drush_set_error(dt('"@type" is not a valid statement type. Please choose between "term" and "file".',
@@ -75,6 +86,7 @@ function drush_fpntc_migrate($entity){
                   ]);
                   $file->save();
                   $nodes = get_nodes($line[$id]);
+
                   if(count($nodes) == 1){
                     $node = current($nodes);
                     update_nodes($node, $destination, $file->id(), $bestanden[1]);
@@ -112,27 +124,36 @@ function drush_fpntc_migrate($entity){
   }
 }
 
-function get_nodes($line){
+function get_nodes($node_title){
   $storage = \Drupal::service('entity_type.manager')->getStorage('node');
   $ids = $storage->getQuery()
-    ->condition('title', $line)
+    ->condition('title', $node_title)
     ->execute();
   $nodes = $storage->loadMultiple($ids);
 
   return $nodes;
 }
 
-function update_nodes($node, $destination, $id, $description = ''){
-  $options = $node->get($destination)->getValue();
-  /*foreach ($options as $option){
-    var_dump(array_values($option));
+function update_nodes($node, $destination, $id, $description = NULL){
+  print('Updating field '.$destination);
+  try{
+    $options = $node->get($destination)->getValue();
+    /*foreach ($options as $option){
+      var_dump(array_values($option));
+    }
+    var_dump($options);*/
+    $opties = [];
+
+    if($description){
+      $opties['description'] = $description;
+    }
+    $opties['target_id'] = $id;
+    //array_push($options, ['target_id' => $id]);
+    array_push($options, $opties);
+    $node->set($destination, $options);
+    $node->save();
   }
-  var_dump($options);*/
-
-  array_push($options, ['target_id' => $id]);
-
-
-
-  $node->set($destination, $options);
-  $node->save();
+  catch (Exception $e){
+    print('Exception caught: '.$e->getMessage());
+  }
 }
