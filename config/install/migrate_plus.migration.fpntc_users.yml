@@ -1,0 +1,50 @@
+# Migration configuration for users
+id: fpntc_users
+label: fpntc users from D7 site
+migration_group: fpntc
+migration_dependencies: {}
+source:
+  plugin: csv
+  path: 'public://csv/FPNTC_users.csv'
+  delimiter: ','
+  enclosure: '"'
+  header_row_count: 1
+  keys:
+    - id
+  column_names:
+    -
+      id: 'Unique id'
+    -
+      name: 'Unique username'
+    -
+      status: 'Whether the user is active(1) or blocked(0)'
+    -
+      timezone: 'User timezone'
+    -
+      init: 'E-mail address used for initial account creation.'
+    -
+      mail: 'User email address'
+    -
+      pass: 'User password hashed'
+
+destination:
+  plugin: entity:user
+process:
+  name: name
+  #uid: uid
+  status: status
+  #created: created
+  #access: access
+  #login: login
+  timezone: timezone
+  init: init
+  mail: mail
+  pass: pass
+  roles:
+    plugin: default_value
+    default_value: 1
+
+dependencies:
+  enforced:
+    module:
+      - fpntc_migrate

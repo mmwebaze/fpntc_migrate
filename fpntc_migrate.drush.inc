@@ -16,17 +16,15 @@ function fpntc_migrate_drush_command(){
 }
 
 function drush_fpntc_migrate($entity){
-  /*$storage = \Drupal::service('entity_type.manager')->getStorage('node');
-  $ids = $storage->getQuery()
-    ->condition('type', 'resource')
-    ->execute();
-  $nodes = $storage->loadMultiple($ids);
-  foreach ($nodes as $node){
-    var_dump('Deleting node with id '.$node->id());
-    $node->delete();
+  $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+  $users = $storage->loadMultiple();
+ // $nodes = $storage->loadMultiple($ids);
+  foreach ($users as $user){
+    var_dump('Deleting node with id '.$user->id());
+    //$node->delete();
   }
 
-  die();*/
+  die();
   $correct_args = array('term', 'file');
   if (!in_array($entity, $correct_args)) {
     return drush_set_error(dt('"@type" is not a valid statement type. Please choose between "term" and "file".',
