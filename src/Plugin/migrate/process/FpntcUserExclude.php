@@ -16,9 +16,9 @@ use Drupal\migrate\Row;
  */
 class FpntcUserExclude extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property){
+    //add user emails to be excluded here
     $exclude_users = [
-      'katie_saul@jsi.com', 'daniel_cothran@jsi.com', 'cbateman@jsi.com','costelloef@gmail.com',
-      'theresa_russo@jsi.com', 'anna_laurence@jsi.com','elizabeth_costello@jsi.com'
+
     ];
     if (in_array($value, $exclude_users)) {
       $message = !empty($this->configuration['message']) ? $this->configuration['message'] : '';
