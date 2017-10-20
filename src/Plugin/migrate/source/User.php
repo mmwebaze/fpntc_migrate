@@ -52,13 +52,24 @@ class User extends SqlBase {
     return $query;
   }
   public function prepareRow(Row $row) {
+    //get user zipcode
     $zip = $this->select('field_data_field_user_zip', 'uz')
       ->fields('uz', ['field_user_zip_value','entity_id'])
       ->condition('entity_id', $row->getSourceProperty('uid'))
       ->execute()
       ->fetchCol();
     $row->setSourceProperty('zipcode', $zip);
+
+    //Get user agency name
+    /*$agency_name = $this->select('field_data_field_user_agency_name', 'uan')
+      ->fields('uan', ['field_user_agency_name_value','entity_id'])
+      ->condition('entity_id', $row->getSourceProperty('uid'))
+      ->execute()
+      ->fetchCol();
+    $row->setSourceProperty('agency_name', $agency_name);*/
+
     $field_name = [];
+    //get user first name
     $firstname = $this->select('field_data_field_user_first_name', 'ufn')
       ->fields('ufn', ['field_user_first_name_value','entity_id'])
       ->condition('entity_id', $row->getSourceProperty('uid'))
@@ -66,22 +77,16 @@ class User extends SqlBase {
       ->fetchCol();
     $row->setSourceProperty('firstname', $firstname);
     $field_name['given'] = $firstname[0];
-    var_dump($firstname);
 
+    //get user last name
     $lastname = $this->select('field_data_field_user_last_name', 'uln')
       ->fields('uln', ['field_user_last_name_value','entity_id'])
       ->condition('entity_id', $row->getSourceProperty('uid'))
       ->execute()
       ->fetchCol();
     $field_name['family'] = $lastname[0];
-    var_dump($field_name);
-    //die();
+
     $row->setSourceProperty('field_name', $field_name);
- /* select u.name, ufn.field_user_first_name_value, uln.field_user_last_name_value, uz.field_user_zip_value from users u
-  inner join field_data_field_user_first_name ufn on (u.uid = ufn.entity_id)
-  inner join field_data_field_user_last_name uln on (u.uid = uln.entity_id)
-  inner join field_data_field_user_zip uz on (u.uid = uz.entity_id)
-  LIMIT 10*/
     return parent::prepareRow($row);
   }
 }

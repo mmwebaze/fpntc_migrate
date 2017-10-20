@@ -8,7 +8,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Node body field creation plugin
+ * FPnct Test plugin
  *
  * @MigrateProcessPlugin(
  *   id = "fpntc_test"

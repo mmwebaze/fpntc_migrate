@@ -13,11 +13,14 @@ process:
   status: status
   timezone: timezone
   init: init
-  mail: mail
+  mail:
+    plugin: fpntc_user_exclude
+    method: row
+    source: mail
   pass: pass
   'field_name': field_name
-  #'field_name/family': lastname
   field_zip_code: zipcode
+  #field_agency_name: agency_name
   roles:
     plugin: default_value
     default_value: authenticated
