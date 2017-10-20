@@ -20,8 +20,13 @@ function drush_fpntc_migrate($entity){
   $users = $storage->loadMultiple();
  // $nodes = $storage->loadMultiple($ids);
   foreach ($users as $user){
-    var_dump('Deleting node with id '.$user->id());
-    //$node->delete();
+    if ($user->id() == 0 || $user->id() == 1){
+
+    }
+    else{
+      var_dump('deleting user with id '+$user->id());
+      $user->delete();
+    }
   }
 
   die();

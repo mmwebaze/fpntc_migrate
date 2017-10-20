@@ -1,0 +1,2 @@
+##Re-loading configuration files (better than having to uninstall and install module)
+drush config-import --partial --source=modules/custom/fpntc_migrate/config/install

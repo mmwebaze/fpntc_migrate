@@ -1,0 +1,28 @@
+# Migration configuration for users
+id: fpntc_user
+label: FPNTC users from D7 site
+migration_group: fpntc
+migration_dependencies: {}
+source:
+  plugin: fpntc_user_sql
+
+destination:
+  plugin: entity:user
+process:
+  name: name
+  status: status
+  timezone: timezone
+  init: init
+  mail: mail
+  pass: pass
+  'field_name': field_name
+  #'field_name/family': lastname
+  field_zip_code: zipcode
+  roles:
+    plugin: default_value
+    default_value: authenticated
+
+dependencies:
+  enforced:
+    module:
+      - fpntc_migrate
